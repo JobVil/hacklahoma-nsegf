@@ -1,0 +1,6 @@
+server name: hacklahoma-nsegf-sql-server
+resource group: hacklahoma-nsegf
+admin login: hacklahoma
+admin password: nP3u0FEEpeyo
+
+db name: nsegf-db
