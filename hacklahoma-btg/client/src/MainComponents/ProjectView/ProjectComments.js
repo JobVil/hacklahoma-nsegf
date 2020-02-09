@@ -6,7 +6,7 @@ const ProjectComments = () => (
     <GridColumn width={1}></GridColumn>
     <GridColumn width={10} textAlign='left'>
     <Comment.Group>
-      <Header as='h3' dividing>
+      <Header as='h3' dividing textAlign='center'>
         Comments
       </Header>
 

@@ -11,7 +11,7 @@ const paragraph = <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
                       Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras
                       dapibus.</p>
 
-const FilterLayout = () => (
+const FilterLayout = (props) => (
   <Grid stretched='true'>
     <Grid.Column  width={0}></Grid.Column>
     <Grid.Column width={10} textAlign='left'>
@@ -19,8 +19,8 @@ const FilterLayout = () => (
     <Item>
       <Item.Image src = 'https://react.semantic-ui.com/images/wireframe/image.png' />
 
-      <Item.Content>
-        <Item.Header as='a' textAlign='left'>Title</Item.Header>
+      <Item.Content onClick={()=> props.goToProject()}>
+        <Item.Header as='a' textAlign='left' >Title</Item.Header>
         <Item.Meta>
           <span className='cinema'>WebDev</span>
         </Item.Meta>

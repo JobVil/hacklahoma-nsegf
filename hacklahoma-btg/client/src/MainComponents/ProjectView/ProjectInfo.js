@@ -35,6 +35,10 @@ const ProjectInfo = () => (
     <GridRow>
     <GridColumn width={1}></GridColumn>
     <GridColumn width={10}>
+    <Divider hidden />
+    <Header as='h2' textAlign='left' className='projectTitle'>Discription</Header>
+    <Divider hidden />
+    <Divider hidden />
       <Container textAlign='justified'>
         <Header as='h3' textAlign='center' className='projectTitle'>This Is A Demo title</Header>
         <Divider />

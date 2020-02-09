@@ -7,17 +7,36 @@ import ItemExampleDivided from './MainComponents/MainPage'
 
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: "Home",
+    }
+
+    this.goToProject = this.goToProject.bind(this);
+    this.goHome = this.goHome.bind(this);
   }
 
-  state = {
-
+  goToProject(){
+    this.setState({
+      page: "project"
+    })
   }
+
+  goHome(){
+    this.setState({
+      page: "Home"
+    })
+  }
+
   render(){
     return (
       <div className="App">
-        <Main />
+        <Main 
+        page={this.state.page} 
+        goToProject={this.goToProject}
+        goHome={this.goHome}
+        />
       </div>
       );
   }
