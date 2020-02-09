@@ -57,7 +57,7 @@ handleChange = (e) => {
 
         return(
         <Comment>
-          <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
+          <Comment.Avatar src={comment.user_url}/>
           <Comment.Content>
             <Comment.Author >{comment.userName}</Comment.Author>
             <Comment.Metadata>

@@ -40,7 +40,7 @@ class ProjectInfo extends Component {
     <Grid divided>
     <Grid.Row >
       <Grid.Column width={3}>
-        <Image src={this.state.projectInfo.logo_url} />
+        <Image src={process.env.PUBLIC_URL+this.state.projectInfo.logo_url} />
         <h4>Labels</h4>
         <FilterLaybels catigories={this.state.projectInfo.catigories}/>
       </Grid.Column>
@@ -62,9 +62,7 @@ class ProjectInfo extends Component {
     <GridRow>
     <GridColumn width={1}></GridColumn>
     <GridColumn width={10}>
-    <Divider hidden />
     <Header as='h2' textAlign='left' className='projectTitle'>Discription</Header>
-    <Divider hidden />
     <Divider hidden />
       <Container textAlign='justified'>
         <Header as='h3' textAlign='center' className='projectTitle'>{this.state.projectInfo.pname}</Header>

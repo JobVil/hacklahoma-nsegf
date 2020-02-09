@@ -79,7 +79,7 @@ class FilterLayout extends Component {
       {Object.keys(this.state.items).map(key => {
         var item = this.state.items[key]
         return (<Item className='report-card'>
-          <Item.Image onClick={()=> this.props.goToProject(item.pid)} src = {item.logo_url}/>
+          <Item.Image onClick={()=> this.props.goToProject(item.pid)} src = {/*process.env.PUBLIC_URL + '/' +*/item.logo_url}/>
           <Item.Content >
             <Item.Header  onClick={()=> this.props.goToProject(item.pid)} textAlign='left' >{item.pname}</Item.Header>
             <Item.Extra className='fav-report' textAlign='left'>

@@ -7,7 +7,7 @@ const MemberList = (props) => {
       <div>
           {props.members.map(member => 
           <Label as='a' image>
-            <img src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />
+            <img src={'https://react.semantic-ui.com/images/avatar/small/'+member+'.jpg'} />
               {member}
           </Label>)}
       </div>

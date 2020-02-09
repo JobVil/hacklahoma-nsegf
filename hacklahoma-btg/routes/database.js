@@ -4,6 +4,7 @@ var router = express.Router();
 
 
 var jsonArray = [];
+var projectJsonArray = [];
 
 // Create connection to database
 const config = {
@@ -32,12 +33,12 @@ connection.on("connect", err => {
   }
 });
 
-async function queryDatabase() {
+async function queryDatabase(sqlString) {
   console.log("Reading rows from the Table...");
 
   // Read all rows from table
   const request = new Request(
-    `SELECT * FROM Users`,
+    sqlString,
     (err, rowCount) => {
       if (err) {
         console.error(err.message);
@@ -53,7 +54,7 @@ async function queryDatabase() {
         rowObject[column.metadata.colName] = column.value;
         console.log("%s\t%s", column.metadata.colName, column.value);
     });
-    jsonArray.push(rowObject);
+    projectJsonArray.push(rowObject);
   });
 
   request.on('doneProc', function(rowCount, more, returnStatus, rows) {
@@ -61,14 +62,14 @@ async function queryDatabase() {
   })
   connection.execSql(x);
 
-  return jsonArray;
+  return projectJsonArray;
 }
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
     console.log("test");
-    queryDatabase()
+    queryDatabase(`SELECT * FROM Users`)
       .then(function(value) {
       console.log('Async success!', value);
       res.json((value));
@@ -81,8 +82,18 @@ router.get('/', function(req, res, next) {
 
 /* GET home page. */
 router.get('/GET/allReports', function(req, res, next) {
-  console.log("test");
-  let desc = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo"+
+/*
+  queryDatabase("SELECT Project.pid, Project.pname, Project.majortag, Project.short_desc, Project.logo_url FROM Project")
+  .then(function(value) {
+  console.log('Async success!', value);
+  res.json((value));
+  projectJsonArray = [];
+  })
+  .catch(function(err) {
+  console.log('Caught an error!', err);
+});*/
+
+let desc = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo"+
   "ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et"+
   "magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,"+
   "ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa"+
@@ -145,6 +156,8 @@ router.get('/GET/allReports', function(req, res, next) {
         "main_cat":"Web Dev"
       },
     ])
+  //res.json('[,{"pid
+  
   //res.json('[,{"pid":"1","pname":"Project1","short_desc":"'+desc+'","logo_url":"'+logo_url+'"},{"pid":"1","pname":"Project1","short_desc":"'+desc+'","logo_url":"'+logo_url+'"},{"pid":"1","pname":"Project1","short_desc":"'+desc+'","logo_url":"'+logo_url+'"},{"pid":"1","pname":"Project1","short_desc":"'+desc+'","logo_url":"'+logo_url+'"},{"pid":"1","pname":"Project1","short_desc":"'+desc+'","logo_url":"'+logo_url+'"},{"pid":"1","pname":"Project1","short_desc":"'+desc+'","logo_url":"'+logo_url+'"}]');
 });
 
@@ -178,13 +191,13 @@ router.get('/GET/singleReport/:pid', function(req, res, next) {
   "arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo."+
   "Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras"+
   "dapibus.";
-  let logo_url = 'https://react.semantic-ui.com/images/wireframe/image.png';
+  let logo_url = '/images/api.png';
   let ext_url = 'github.com';
-  let pname = 'project'+ req.params.pid;
-  let owner = 'jobv';
+  let pname = 'Web Based ASP.net';
+  let owner = 'mathew';
   let catigories = ["Web Dev","beginner","c#"];
   let memberSize = '3';
-  let members = ['Job v', 'Lucas b', 'grant'];
+  let members = ['matt', 'nan', 'jenny'];
   let ownerRating = '4';
   res.json(
     {
@@ -205,37 +218,55 @@ router.get('/GET/singleReport/:pid', function(req, res, next) {
 router.get('/GET/singleReportComments/:pid', function(req, res, next) {
 
   let userName = 'JobV';
-  let dateCreated = '1/12/2010';
-  let dateCreated1 = '1/13/2010';
-  let dateCreated2 = '1/14/2010';
-  let dateCreated3 = '1/15/2010';
-  let dateCreated4 = '1/16/2010';
-  let commentText = 'project'+ req.params.pid;
+  let userName1 = 'Lucas B';
+  let userName2 = 'Alan lee';
+  let userName3 = 'Grant S';
+  let userName4 = 'Eric M';
+  let dateCreated = 'Yesterday at 10:30 AM';
+  let dateCreated1 = 'Yesterday at 1:40 PM';
+  let dateCreated2 = 'Today at 1:00 AM';
+  let dateCreated3 = 'Today at 2:00 AM';
+  let dateCreated4 = 'Less Then an Hour Ago';
+  let commentText = 'This Is a great Idea';
+  let commentText1 = 'I like the way you think';
+  let commentText2 = 'Could I be apart of this';
+  let commentText3 = 'Looking forwad to seeing in in action!!';
+  let commentText4 = 'Woot Woot !!';
+  let user_url = 'https://react.semantic-ui.com/images/avatar/small/matt.jpg';
+  let user_url1 = 'https://react.semantic-ui.com/images/avatar/small/joe.jpg';
+  let user_url2 = 'https://react.semantic-ui.com/images/avatar/small/nan.jpg';
+  let user_url3 = 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg';
+  let user_url4 = 'https://react.semantic-ui.com/images/avatar/small/ade.jpg';
   res.json([
     {
       "userName":userName,
       "dateCreated":dateCreated,
       "commentText":commentText,
+      "user_url":user_url
     },
     {
-      "userName":userName,
+      "userName":userName1,
       "dateCreated":dateCreated2,
-      "commentText":commentText,
+      "commentText":commentText1,
+      "user_url":user_url1
     },
     {
-      "userName":userName,
+      "userName":userName2,
       "dateCreated":dateCreated3,
-      "commentText":commentText,
+      "commentText":commentText2,
+      "user_url":user_url2
     },
     {
-      "userName":userName,
+      "userName":userName3,
       "dateCreated":dateCreated4,
-      "commentText":commentText,
+      "commentText":commentText3,
+      "user_url":user_url3
     },
     {
-      "userName":userName,
+      "userName":userName4,
       "dateCreated":dateCreated1,
-      "commentText":commentText,
+      "commentText":commentText4,
+      "user_url":user_url4
     }
   ]
   );
