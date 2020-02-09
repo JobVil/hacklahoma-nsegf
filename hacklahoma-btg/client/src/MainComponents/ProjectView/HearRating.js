@@ -1,10 +1,10 @@
 import React from 'react'
 import { Rating } from 'semantic-ui-react'
 
-const HeartRating = () => (
+const HeartRating = (props) => (
     <div>
-        <pre>Avg User Rating</pre>
-        <Rating icon='heart' defaultRating={3} maxRating={5} size='mini'/>
+        <pre>User Rating</pre>
+        <Rating icon='heart' rating={props.ownerRating} maxRating={5} size='mini'/>
     </div>
 )
 

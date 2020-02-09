@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Divider, Grid, GridColumn, Image, GridRow, Header } from 'semantic-ui-react';
 import ProfileIcon from './OwnerProfileIcon'
 import HeartRating from './HearRating'
@@ -8,23 +8,50 @@ import MemberList from './ProjectMemberList'
 import RecentOverView from './ProjectRecentOV'
 import FilterLaybels from './FilterLabels'
 
-const ProjectInfo = () => (
-  <div>
+class ProjectInfo extends Component {
+  constructor(props){
+    super(props)
+    this.state ={
+      projectInfo: {}
+    }
+  }
+
+  onLoad = () =>{
+    fetch('/api/GET/singleReport/'+this.props.pagePid)
+    .then((res) => res.json())
+    .then((data) => {
+      try{
+        this.setState({projectInfo: data}, function() { console.log("setState completed") })
+      } catch (e){
+        console.log(e);
+      }
+      
+      return data;
+    })
+  }
+
+  componentDidMount(){
+    this.onLoad();
+  }
+
+  render(){
+    return (
+      <div>
     <Grid divided>
     <Grid.Row >
       <Grid.Column width={3}>
-        <Image src={process.env.PUBLIC_URL + '/images/image.png'} />
+        <Image src={this.state.projectInfo.logo_url} />
         <h4>Labels</h4>
-        <FilterLaybels/>
+        <FilterLaybels catigories={this.state.projectInfo.catigories}/>
       </Grid.Column>
       <Grid.Column floated='left' textAlign='left' width={4}>
         <h4>Owner:</h4>
-          <ProfileIcon/>
-          <HeartRating/>
-        <h5>Member Size: #</h5>
-        <MemberList/>
+          <ProfileIcon owner={this.state.projectInfo.owner}/>
+          <HeartRating ownerRating={this.state.projectInfo.ownerRating}/>
+        <h5>Member Size: {this.state.projectInfo.member_size}</h5>
+        <MemberList members={this.state.projectInfo.members}/>
         <h5>Project Link</h5>
-        <a href='https://github.com/' src='https://github.com/' target='__blank'>https://github.com/</a>
+        <a href={this.state.projectInfo.ext_url} src={this.state.projectInfo.ext_url} target='__blank'>{this.state.projectInfo.ext_url}</a>
       </Grid.Column>
       <Grid.Column floated='left' textAlign='left' width={8}>
         <RecentOverView/>
@@ -35,44 +62,24 @@ const ProjectInfo = () => (
     <GridRow>
     <GridColumn width={1}></GridColumn>
     <GridColumn width={10}>
+    <Divider hidden />
+    <Header as='h2' textAlign='left' className='projectTitle'>Discription</Header>
+    <Divider hidden />
+    <Divider hidden />
       <Container textAlign='justified'>
-        <Header as='h3' textAlign='center' className='projectTitle'>This Is A Demo title</Header>
+        <Header as='h3' textAlign='center' className='projectTitle'>{this.state.projectInfo.pname}</Header>
         <Divider />
         <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-          ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et
-          magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-          ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-          quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
-          arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-          Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras
-          dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
-          tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac,
-          enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-          Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
-          imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
-          ultricies nisi.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-          ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et
-          magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-          ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-          quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
-          arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-          Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras
-          dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
-          tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac,
-          enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-          Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
-          imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
-          ultricies nisi.
+          {this.state.projectInfo.desc}
         </p>
       </Container>
     </GridColumn>
     <GridColumn width={1}></GridColumn>
     </GridRow>
   </Grid></div>
-)
+    );
+  }
+  
+}
 
 export default ProjectInfo

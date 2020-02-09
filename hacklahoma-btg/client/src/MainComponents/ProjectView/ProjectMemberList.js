@@ -1,21 +1,20 @@
 import React from 'react'
 import { Label } from 'semantic-ui-react'
 
-const MemberList = () => (
-  <div>
-    <Label as='a' image>
-      <img src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />
-      Joe
-    </Label>
-    <Label as='a' image>
-      <img src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
-      Elliot
-    </Label>
-    <Label as='a' image>
-      <img src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
-      Stevie
-    </Label>
-  </div>
-)
+const MemberList = (props) => {
+  if(props.members){
+    return (
+      <div>
+          {props.members.map(member => 
+          <Label as='a' image>
+            <img src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />
+              {member}
+          </Label>)}
+      </div>
+    )
+  }else {
+    return <div></div>
+  }
+ }
 
 export default MemberList

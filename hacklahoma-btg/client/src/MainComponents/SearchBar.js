@@ -5,21 +5,31 @@ import { Search, Grid, Header, Segment } from 'semantic-ui-react'
 
 const initialState = { isLoading: false, results: [], value: '' }
 
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
-}))
+const source =[
+  {
+    "title": "c++",
+    "description": "Programming Lang",
+  },
+  {
+    "title": "Web Developement",
+    "description": "Platform",
+  },
+  {
+    "title": "Beginner",
+    "description": "Skill Level",
+  }
+]
 
 export default class SearchExampleStandard extends Component {
   state = initialState
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+  handleResultSelect = (e, { result }) => { 
+    this.setState({ value: result.title });
+    this.props.addFilter(result.title);
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
-
     setTimeout(() => {
       if (this.state.value.length < 1) return this.setState(initialState)
 

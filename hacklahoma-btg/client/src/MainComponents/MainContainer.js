@@ -9,7 +9,12 @@ class Main extends Component{
                 <div className='header'>
                 </div>
                 <div className='side-bar'>
-                    <MainLayout/>
+                    <MainLayout 
+                        page={this.props.page} 
+                        pagePid={this.props.pagePid}
+                        goToProject={this.props.goToProject}
+                        goHome={this.props.goHome}
+                    />
                 </div>
             </div>
         );

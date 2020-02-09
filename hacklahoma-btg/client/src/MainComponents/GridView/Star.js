@@ -11,7 +11,6 @@ export default class RatingExampleOnRate extends Component {
     return (
       <div>
         <Rating icon='star' size='huge' maxRating={1} onRate={this.handleRate} />
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </div>
     )
   }
