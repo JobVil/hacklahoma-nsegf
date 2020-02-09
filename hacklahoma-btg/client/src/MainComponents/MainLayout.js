@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
-import ItemExampleDivided from './MainPage'
+import FilterLayout from './GridView/FilterLayout'
 import SearchExampleStandard from './SearchBar'
-import ProjectCloseUp from './ProjectCloseUP'
-import { Header, Icon, Image, Menu, Segment, Sidebar, Grid } from 'semantic-ui-react'
+import ProjectCloseUp from './ProjectView/MainBody'
+import { Header, Icon, Image, Menu, Segment, Sidebar, Grid, Sticky } from 'semantic-ui-react'
 import IconExampleCircular from './AccountIcons'
 
-class SidebarMS extends Component {
+class MainLayout extends Component {
     
     render(){
         let body;
+        let bodyCenterd;
         if(false){
-            body = <ItemExampleDivided />
+            body = <FilterLayout />
+            bodyCenterd = 'left';
         } else {
             body = <ProjectCloseUp/>
+            bodyCenterd = 'center';
         }
         return( 
-        <Sidebar.Pushable as={Segment}>
+        <Sidebar.Pushable as={Segment} transform='none'>
             <Sidebar
               as={Menu}
               animation='push'
@@ -23,8 +26,9 @@ class SidebarMS extends Component {
               inverted
               vertical
               visible
-              width='wide'
+              width='thin'
             >
+            <Sticky>
               <Menu.Item as='a'>
                 <Icon name='home' />
                 Home
@@ -37,23 +41,21 @@ class SidebarMS extends Component {
                 <Icon name='camera' />
                 Channels
               </Menu.Item>
+              </Sticky>
             </Sidebar>
         
             <Sidebar.Pusher>
               <Segment basic>
                 <Grid divided='vertically'>
-                <Grid.Row columns={3}>
-                    <Grid.Column floated='right'>
-                        <Header as='h3'>Application Content</Header>
-                    </Grid.Column>
-                    <Grid.Column stretched='true'>
+                <Grid.Row columns={2}>
+                    <Grid.Column width={7}>
                         <SearchExampleStandard />
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column width={5} textAlign='right'>
                         <IconExampleCircular/>
                     </Grid.Column>
                 </Grid.Row>
-                <Grid.Row centered='true' stretched='true'>
+                <Grid.Row centered=''  textAlign='left'>
                     {body}
                 </Grid.Row>
                 </Grid>
@@ -62,7 +64,6 @@ class SidebarMS extends Component {
           </Sidebar.Pushable>
           );
     }
- 
 }
 
-export default SidebarMS
+export default MainLayout

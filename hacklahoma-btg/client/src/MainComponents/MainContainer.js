@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import Header from './Header'
-import SidebarMS from './Sidebar'
-import SearchExampleStandard from './SearchBar'
+import MainLayout from './MainLayout'
 
 class Main extends Component{
     render(){
         return (
             <div className='main'>
                 <div className='header'>
-                    <Header/>
-                    <SearchExampleStandard/>
                 </div>
                 <div className='side-bar'>
-                    <SidebarMS/>
+                    <MainLayout/>
                 </div>
             </div>
         );

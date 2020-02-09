@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Icon, Image, Item, Label } from 'semantic-ui-react'
+import RatingExampleOnRate from './GridView/Star'
+import { Button, Icon, Image, Item, Label} from 'semantic-ui-react'
 
 const paragraph = <Image src={process.env.PUBLIC_URL + '/images/short-paragraph.png'} />
 
@@ -17,6 +18,9 @@ const ItemExampleDivided = () => (
         <Item.Extra>
           <Label>IMAX</Label>
           <Label icon='globe' content='Additional Languages' />
+        </Item.Extra>
+        <Item.Extra>
+            <RatingExampleOnRate/>
         </Item.Extra>
       </Item.Content>
     </Item>
@@ -37,6 +41,9 @@ const ItemExampleDivided = () => (
           </Button>
           <Label>Limited</Label>
         </Item.Extra>
+        <Item.Extra>
+            <RatingExampleOnRate/>
+        </Item.Extra>
       </Item.Content>
     </Item>
 
@@ -54,6 +61,9 @@ const ItemExampleDivided = () => (
             Buy tickets
             <Icon name='right chevron' />
           </Button>
+        </Item.Extra>
+        <Item.Extra>
+            <RatingExampleOnRate/>
         </Item.Extra>
       </Item.Content>
     </Item>
