@@ -5,6 +5,9 @@ DROP PROCEDURE AddTagProjects
 DROP PROCEDURE AddTagUser
 DROP PROCEDURE AddProjectUser
 DROP PROCEDURE GetComments
+DROP PROCEDURE GetProjectBrief
+DROP PROCEDURE GetUserHeartsForProject
+DROP PROCEDURE GetProjectTags
 
 DROP TABLE ProjectUsers
 DROP TABLE TagUsers
@@ -61,10 +64,12 @@ CREATE TABLE ProjectUsers(
 	username VARCHAR(64),
 	pid INT,
 	star BIT,
+	userHearts INT,
 	PRIMARY KEY (username, pid),
 	FOREIGN KEY (username) REFERENCES Users(username),
 	FOREIGN KEY (pid) REFERENCES Project(pid)
 )
+-------------------------------------------------------------
 
 GO
 CREATE PROCEDURE AddUsers
@@ -128,11 +133,12 @@ GO
 CREATE PROCEDURE AddProjectUser
     @username VARCHAR(64),
 	@pid INT,
-	@star BIT
+	@star BIT,
+	@userHearts INT
 AS
 BEGIN
-    INSERT INTO ProjectUsers(username, pid, star)
-    VALUES(@username, @pid, @star)
+    INSERT INTO ProjectUsers(username, pid, star, userHearts)
+    VALUES(@username, @pid, @star, @userHearts)
 END
 
 GO
@@ -148,16 +154,121 @@ END
 
 GO
 CREATE PROCEDURE GetProjectBrief
+	@username VARCHAR(64)
+AS
+BEGIN
+	SELECT Project.pid, Project.pname, Project.majortag, Project.short_desc, Project.logo_url, ProjectUsers.star
+	FROM Project
+	INNER JOIN ProjectUsers ON Project.pid = ProjectUsers.pid
+	WHERE ProjectUsers.username = @username
+END
+
+GO
+CREATE PROCEDURE GetUserHeartsForProject
 	@pid INT
 AS
 BEGIN
-	SELECT pname, short_desc
+	SELECT userHearts
+	FROM ProjectUsers
+	WHERE pid = @pid
+END
 
 
--- EXEC AddUsers @username = 'LucasB', @name = 'Lucas Bowker', @picture_url = NULL
--- EXEC AddUsers @username = 'JobV', @name = 'Job Villamil', @picture_url = NULL
--- EXEC AddUsers @username = 'GrantS', @name = 'Grant Swalwell', @picture_url = NULL
+GO
+CREATE PROCEDURE GetProjectTags
+	@pid INT
+AS
+BEGIN
+	SELECT tname
+	FROM TagProjects
+	WHERE pid = @pid
+END
 
--- EXEC AddProject @pname = 'Dungeon-Note', @short_desc = 'an app for dungeon masters for tabletop rpg games', @description = 'an app for dungeon masters for tabletop rpg games!', @logo_url = 'NONE', @external_url = 'https://github.com/ulysses-io/Dungeon-Note', @owner = 'LucasB', @ownerStars = '5'
 
--- EXEC AddComment @pid = 1, @username = 'LucasB', @commentText = 'Lucas finds himself to be a lovely individual.'
+
+-- EXEC AddUsers @username = 'LucasB', @name = 'Lucas Bowker', @picture_url = 'joe.jpeg'
+-- EXEC AddUsers @username = 'JobV', @name = 'Job Villamil', @picture_url = 'elliot.jpeg'
+-- EXEC AddUsers @username = 'GrantS', @name = 'Grant Swalwell', @picture_url = 'stevie.jpeg'
+-- EXEC AddUsers @username = 'AlanL', @name = 'Alan Lee', @picture_url = 'ade.jpeg' 
+-- EXEC AddUsers @username = 'EmilyK', @name = 'Emily Knox', @picture_url = 'veronika.jpeg'
+-- EXEC AddUsers @username = 'JohnB', @name = 'John Brown', @picture_url = 'christian.jpeg'
+-- EXEC AddUsers @username = 'AlexK', @name = 'Alex Klap', @picture_url = 'jenny.jpeg'
+-- EXEC AddUsers @username = 'MeganB', @name = 'Megan Bird', @picture_url = 'zoe.jpeg'
+-- EXEC AddUsers @username = 'BettyC', @name = 'Betty Crocker', @picture_url = 'nan.jpeg' 
+-- EXEC AddUsers @username = 'EricaK', @name = 'Erica Klang', @picture_url = 'matthew.jpeg' 
+-- EXEC AddUsers @username = 'MicaN', @name = 'Mica Nielsen', @picture_url = 'molly.jpeg' 
+
+
+
+-- EXEC AddComment @pid = 1, @username = 'LucasB', @commentText = 'I like developing this application.'
+-- EXEC AddComment @pid = 1, @username = 'EmilyK', @commentText = 'Do you need any c++ developers for this app?'
+-- EXEC AddComment @pid = 1, @username = 'LucasB', @commentText = 'No! Look at the tags!'
+
+-- EXEC AddTagProjects @tname = 'Web Frontend', @pid = 1
+-- EXEC AddTagProjects @tname = 'UI', @pid = 1
+-- EXEC AddTagProjects @tname = 'Javascript', @pid = 2
+-- EXEC AddTagProjects @tname = 'React', @pid = 2
+-- EXEC AddTagProjects @tname = 'Python', @pid = 3
+-- EXEC AddTagProjects @tname = 'Elixer', @pid = 3
+-- EXEC AddTagProjects @tname = 'Web Frontend', @pid = 4
+-- EXEC AddTagProjects @tname = 'Python', @pid = 4
+-- EXEC AddTagProjects @tname = 'Tensorflow', @pid = 5
+-- EXEC AddTagProjects @tname = 'Anaconda', @pid = 5
+-- EXEC AddTagProjects @tname = 'Research', @pid = 6
+-- EXEC AddTagProjects @tname = 'Python', @pid = 6
+-- EXEC AddTagProjects @tname = 'CLI', @pid = 7
+-- EXEC AddTagProjects @tname = 'Web Frontend', @pid = 7
+-- EXEC AddTagProjects @tname = 'Python', @pid = 8
+-- EXEC AddTagProjects @tname = 'Web API', @pid = 8
+-- EXEC AddTagProjects @tname = 'Web API', @pid = 9
+-- EXEC AddTagProjects @tname = 'Javascript', @pid = 9
+-- EXEC AddTagProjects @tname = 'Electron', @pid = 10
+-- EXEC AddTagProjects @tname = 'Flux', @pid = 10
+-- EXEC AddTagProjects @tname = 'Javascript', @pid = 11
+-- EXEC AddTagProjects @tname = 'Scientfic', @pid = 11
+-- EXEC AddTagProjects @tname = 'Javascript', @pid = 12
+-- EXEC AddTagProjects @tname = 'Node.js', @pid = 12
+-- EXEC AddTagProjects @tname = 'Game Engine', @pid = 13
+-- EXEC AddTagProjects @tname = 'Multiplatform', @pid = 13
+-- EXEC AddTagProjects @tname = 'Docker', @pid = 14
+-- EXEC AddTagProjects @tname = 'Container', @pid = 14
+-- EXEC AddTagProjects @tname = 'Kotlin', @pid = 15
+-- EXEC AddTagProjects @tname = 'Toolkit', @pid = 15
+-- EXEC AddTagProjects @tname = 'Rust', @pid = 16
+-- EXEC AddTagProjects @tname = 'Browser', @pid = 16
+-- EXEC AddTagProjects @tname = 'IDE', @pid = 17
+-- EXEC AddTagProjects @tname = 'Javascript', @pid = 17
+-- EXEC AddTagProjects @tname = 'Python', @pid = 18
+-- EXEC AddTagProjects @tname = 'Python', @pid = 18
+-- EXEC AddTagProjects @tname = 'Internationalization', @pid = 19
+-- EXEC AddTagProjects @tname = 'Web Server', @pid = 19
+-- EXEC AddTagProjects @tname = 'Docker', @pid = 20
+-- EXEC AddTagProjects @tname = 'Wrapper', @pid = 20
+
+EXEC AddProjectUser @username = 'MeganB', @pid = 1, @star = 1, @userHearts = 2
+EXEC AddProjectUser @username = 'BettyC', @pid = 1, @star = 1, @userHearts = 3
+EXEC AddProjectUser @username = 'LucasB', @pid = 1, @star = 1, @userHearts = 1
+
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
+EXEC AddProjectUser @username = '', @pid = , @star = , @userHearts = 1
