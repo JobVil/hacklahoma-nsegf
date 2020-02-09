@@ -7,11 +7,11 @@ class Main extends Component{
         return (
             <div className='main'>
                 <div className='header'>
-                {this.props.page}
                 </div>
                 <div className='side-bar'>
                     <MainLayout 
                         page={this.props.page} 
+                        pagePid={this.props.pagePid}
                         goToProject={this.props.goToProject}
                         goHome={this.props.goHome}
                     />

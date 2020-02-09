@@ -8,12 +8,12 @@ export default class ProjectCloseUp extends Component{
     render(){
         return(
             <div>
-                <ProjectInfo/>
+                <ProjectInfo pagePid={this.props.pagePid}/>
                 <Divider hidden />
                 <Divider hidden />
                 <Divider hidden />
                 <Divider hidden />
-                <ProjectComments />
+                <ProjectComments pagePid={this.props.pagePid}/>
             </div>
         );
     }

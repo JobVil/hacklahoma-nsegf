@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.fav-report .star{
+  float: right;
+}
+
+.report-card{
+  cursor: pointer;
+}
+
+.report-card:hover{
+  background-color: #f2f2f5 !important;
+}

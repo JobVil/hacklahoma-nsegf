@@ -42,11 +42,11 @@ class MainLayout extends Component {
         let preBodySpacing;
         let bodySpacing;
         if(this.props.page == "Home"){
-            body = <FilterLayout goToProject={this.props.goToProject} filters={this.props.filters}/>
-            preBodySpacing = 0;
+            body = <FilterLayout goToProject={this.props.goToProject} filters={this.state.filters}/>
+            preBodySpacing = 1;
             bodySpacing = 15;
         } else {
-            body = <ProjectCloseUp/>
+            body = <ProjectCloseUp pagePid={this.props.pagePid}/>
             preBodySpacing = 2;
             bodySpacing = 13;
         }

@@ -11,15 +11,17 @@ class App extends Component {
     super(props);
     this.state = {
       page: "Home",
+      pagePid: ""
     }
 
     this.goToProject = this.goToProject.bind(this);
     this.goHome = this.goHome.bind(this);
   }
 
-  goToProject(){
+  goToProject(pid){
     this.setState({
-      page: "project"
+      page: "project",
+      pagePid: pid
     })
   }
 
@@ -34,6 +36,7 @@ class App extends Component {
       <div className="App">
         <Main 
         page={this.state.page} 
+        pagePid={this.state.pagePid}
         goToProject={this.goToProject}
         goHome={this.goHome}
         />
